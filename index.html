@@ -3,62 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rusty Lake Cinematic</title>
+<title>Teyvat Journey</title>
 
 <style>
 
-/* =====================
-   设计系统
-===================== */
+/* =============================
+   设计系统（Genshin 风）
+============================= */
 
 :root{
-    --bg-dark: #0b0b0b;
-    --red-main: #a00000;
-    --red-glow: #ff0000;
-    --text-main: #e5e5e5;
-    --text-dim: #888;
+    --bg-dark: #0b1020;
+    --bg-gradient: linear-gradient(180deg,#0b1020 0%, #111a35 100%);
+    --gold: #d4af37;
+    --gold-glow: #ffd700;
+    --text-main: #f5f5f5;
+    --text-soft: #b8c0d9;
     --font-title: "Georgia", serif;
     --font-body: "Helvetica", sans-serif;
 }
 
 body{
     margin:0;
-    background: radial-gradient(circle at center, #1a0000 0%, #000 70%);
-    color: var(--text-main);
-    font-family: var(--font-body);
+    background: var(--bg-gradient);
+    color:var(--text-main);
+    font-family:var(--font-body);
     overflow-x:hidden;
 }
 
-/* =====================
+/* =============================
+   星空粒子背景
+============================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    width:200%;
+    height:200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 3px 3px;
+    animation: stars 60s linear infinite;
+    opacity:0.2;
+}
+
+@keyframes stars{
+    from{transform:translate(0,0);}
+    to{transform:translate(-200px,-200px);}
+}
+
+/* =============================
    导航
-===================== */
+============================= */
 
 nav{
     position:fixed;
     width:100%;
-    background:rgba(0,0,0,0.7);
-    backdrop-filter: blur(6px);
     text-align:center;
     padding:15px 0;
+    background:rgba(0,0,0,0.4);
+    backdrop-filter: blur(8px);
     z-index:1000;
 }
 
 nav a{
-    color:var(--red-main);
-    margin:0 25px;
+    color:var(--gold);
     text-decoration:none;
+    margin:0 25px;
     letter-spacing:2px;
     transition:0.3s;
 }
 
 nav a:hover{
-    color:var(--red-glow);
-    text-shadow:0 0 10px red;
+    color:var(--gold-glow);
+    text-shadow:0 0 10px var(--gold-glow);
 }
 
-/* =====================
-   电影首屏
-===================== */
+/* =============================
+   首屏
+============================= */
 
 .hero{
     height:100vh;
@@ -70,31 +91,31 @@ nav a:hover{
 }
 
 .hero h1{
-    font-family: var(--font-title);
+    font-family:var(--font-title);
     font-size:70px;
-    letter-spacing:6px;
-    color:var(--red-glow);
+    letter-spacing:5px;
+    color:var(--gold);
     animation: glow 3s infinite alternate;
 }
 
 @keyframes glow{
-    from{ text-shadow:0 0 10px #400; }
-    to{ text-shadow:0 0 40px var(--red-glow); }
+    from{ text-shadow:0 0 10px #444; }
+    to{ text-shadow:0 0 30px var(--gold-glow); }
 }
 
 .hero p{
+    color:var(--text-soft);
     font-size:18px;
-    color:var(--text-dim);
 }
 
-/* =====================
-   滚动渐显动画
-===================== */
+/* =============================
+   滚动渐显
+============================= */
 
 .fade{
     opacity:0;
-    transform:translateY(40px);
-    transition: all 1.2s ease;
+    transform:translateY(50px);
+    transition:1.2s ease;
 }
 
 .fade.show{
@@ -102,57 +123,9 @@ nav a:hover{
     transform:translateY(0);
 }
 
-/* =====================
-   分支互动
-===================== */
-
-.choice{
-    margin-top:40px;
-    text-align:center;
-}
-
-.choice button{
-    background:black;
-    border:1px solid var(--red-main);
-    color:var(--red-main);
-    padding:10px 20px;
-    margin:10px;
-    cursor:pointer;
-    transition:0.3s;
-}
-
-.choice button:hover{
-    background:var(--red-main);
-    color:black;
-}
-
-.result{
-    margin-top:30px;
-    font-style:italic;
-    color:var(--text-dim);
-}
-
-/* =====================
-   SVG 乌鸦
-===================== */
-
-.crow{
-    position:fixed;
-    top:15%;
-    left:-200px;
-    width:120px;
-    animation: fly 25s linear infinite;
-}
-
-@keyframes fly{
-    0%{ left:-200px; transform:scale(0.8);}
-    50%{ transform:scale(1);}
-    100%{ left:120%; transform:scale(0.8);}
-}
-
-/* =====================
-   章节布局
-===================== */
+/* =============================
+   章节
+============================= */
 
 section{
     max-width:900px;
@@ -163,14 +136,59 @@ section{
 
 h2{
     font-family:var(--font-title);
-    color:var(--red-main);
-    letter-spacing:3px;
+    color:var(--gold);
+}
+
+/* =============================
+   分支互动
+============================= */
+
+.choice{
+    text-align:center;
+    margin-top:40px;
+}
+
+.choice button{
+    background:none;
+    border:1px solid var(--gold);
+    color:var(--gold);
+    padding:10px 25px;
+    margin:10px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.choice button:hover{
+    background:var(--gold);
+    color:black;
+}
+
+.result{
+    margin-top:30px;
+    color:var(--text-soft);
+    font-style:italic;
+}
+
+/* =============================
+   SVG 风龙飞行
+============================= */
+
+.dragon{
+    position:fixed;
+    top:20%;
+    left:-200px;
+    width:150px;
+    animation: fly 30s linear infinite;
+}
+
+@keyframes fly{
+    0%{left:-200px; transform:scale(0.8);}
+    50%{transform:scale(1);}
+    100%{left:120%; transform:scale(0.8);}
 }
 
 @media(max-width:768px){
-    .hero h1{
-        font-size:42px;
-    }
+    .hero h1{font-size:42px;}
 }
 
 </style>
@@ -178,37 +196,37 @@ h2{
 
 <body>
 
-<!-- SVG 乌鸦 -->
-<svg class="crow" viewBox="0 0 64 64">
-<path fill="black" stroke="red" stroke-width="1"
-d="M2 30 Q20 10 40 30 Q55 20 60 35 Q40 45 20 40 Q10 38 2 30Z"/>
+<!-- 风龙 SVG 剪影 -->
+<svg class="dragon" viewBox="0 0 200 100">
+<path fill="#111" stroke="#d4af37" stroke-width="2"
+d="M10 50 Q60 10 120 40 Q150 20 180 50 Q140 60 100 55 Q60 65 10 50Z"/>
 </svg>
 
 <nav>
-<a href="#story">Story</a>
-<a href="#choice">Fate</a>
+<a href="#world">World</a>
+<a href="#fate">Fate</a>
 </nav>
 
 <div class="hero">
-<h1>RUSTY LAKE</h1>
-<p>Memories shape destiny.</p>
+<h1>TEYVAT</h1>
+<p>The stars guide your journey.</p>
 </div>
 
-<section id="story" class="fade">
-<h2>The Memory</h2>
+<section id="world" class="fade">
+<h2>The World of Teyvat</h2>
 <p>
-In the universe of Rusty Lake, time is circular.  
-Memories fragment. Rituals repeat.  
-The crow watches silently.
+Seven nations. Seven elements.  
+Archons watch silently as mortals seek truth.  
+Your journey begins beneath a falling star.
 </p>
 </section>
 
-<section id="choice" class="fade">
-<h2>Choose Your Fate</h2>
+<section id="fate" class="fade">
+<h2>Choose Your Path</h2>
 
 <div class="choice">
-<button onclick="choose(1)">Trust the Crow</button>
-<button onclick="choose(2)">Destroy the Memory</button>
+<button onclick="choose(1)">Follow the Anemo Wind</button>
+<button onclick="choose(2)">Seek the Abyss</button>
 </div>
 
 <div class="result" id="result"></div>
@@ -220,7 +238,7 @@ The crow watches silently.
 /* 滚动渐显 */
 const faders = document.querySelectorAll('.fade');
 
-const appear = new IntersectionObserver(entries=>{
+const observer = new IntersectionObserver(entries=>{
 entries.forEach(entry=>{
 if(entry.isIntersecting){
 entry.target.classList.add('show');
@@ -228,22 +246,23 @@ entry.target.classList.add('show');
 });
 },{threshold:0.3});
 
-faders.forEach(fade=>{
-appear.observe(fade);
-});
+faders.forEach(el=>observer.observe(el));
 
 /* 分支互动 */
 function choose(option){
 const result = document.getElementById("result");
 
 if(option===1){
-result.innerHTML = "The crow accepts you. The cycle continues.";
+result.innerHTML = "The wind answers your call. Freedom becomes your companion.";
 }else{
-result.innerHTML = "You break the memory. But nothing truly ends.";
+result.innerHTML = "You step into darkness. Power whispers from the Abyss.";
 }
 }
 
 </script>
+
+</body>
+</html>
 
 </body>
 </html>
