@@ -2,127 +2,175 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Rusty Lake Universe</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rusty Lake Cinematic</title>
 
 <style>
 
-/* ===== 基础设置 ===== */
-body {
-    margin: 0;
-    padding: 0;
+/* =====================
+   设计系统
+===================== */
+
+:root{
+    --bg-dark: #0b0b0b;
+    --red-main: #a00000;
+    --red-glow: #ff0000;
+    --text-main: #e5e5e5;
+    --text-dim: #888;
+    --font-title: "Georgia", serif;
+    --font-body: "Helvetica", sans-serif;
+}
+
+body{
+    margin:0;
     background: radial-gradient(circle at center, #1a0000 0%, #000 70%);
-    color: #eee;
-    font-family: "Georgia", serif;
-    overflow-x: hidden;
+    color: var(--text-main);
+    font-family: var(--font-body);
+    overflow-x:hidden;
 }
 
-/* ===== 背景雾气动画 ===== */
-body::before {
-    content: "";
-    position: fixed;
-    width: 200%;
-    height: 200%;
-    background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
-    opacity: 0.1;
-    animation: fog 60s linear infinite;
-}
+/* =====================
+   导航
+===================== */
 
-@keyframes fog {
-    0% { transform: translate(0,0); }
-    50% { transform: translate(-200px,-100px); }
-    100% { transform: translate(0,0); }
-}
-
-/* ===== 导航栏 ===== */
-nav {
-    position: fixed;
-    width: 100%;
-    background: rgba(0,0,0,0.8);
-    padding: 15px 0;
-    text-align: center;
+nav{
+    position:fixed;
+    width:100%;
+    background:rgba(0,0,0,0.7);
     backdrop-filter: blur(6px);
-    z-index: 1000;
+    text-align:center;
+    padding:15px 0;
+    z-index:1000;
 }
 
-nav a {
-    color: #aa0000;
-    text-decoration: none;
-    margin: 0 25px;
-    font-size: 18px;
-    transition: 0.3s;
+nav a{
+    color:var(--red-main);
+    margin:0 25px;
+    text-decoration:none;
+    letter-spacing:2px;
+    transition:0.3s;
 }
 
-nav a:hover {
-    color: #ff0000;
-    text-shadow: 0 0 10px red;
+nav a:hover{
+    color:var(--red-glow);
+    text-shadow:0 0 10px red;
 }
 
-/* ===== 首屏 ===== */
-.hero {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    flex-direction: column;
+/* =====================
+   电影首屏
+===================== */
+
+.hero{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
 }
 
-.hero h1 {
-    font-size: 60px;
-    color: #ff0000;
-    letter-spacing: 5px;
-    animation: glow 3s ease-in-out infinite alternate;
+.hero h1{
+    font-family: var(--font-title);
+    font-size:70px;
+    letter-spacing:6px;
+    color:var(--red-glow);
+    animation: glow 3s infinite alternate;
 }
 
-@keyframes glow {
-    from { text-shadow: 0 0 10px #600; }
-    to { text-shadow: 0 0 25px #ff0000; }
+@keyframes glow{
+    from{ text-shadow:0 0 10px #400; }
+    to{ text-shadow:0 0 40px var(--red-glow); }
 }
 
-.hero p {
-    font-size: 20px;
-    opacity: 0.8;
+.hero p{
+    font-size:18px;
+    color:var(--text-dim);
 }
 
-/* ===== 内容区域 ===== */
-.section {
-    padding: 100px 20px;
-    max-width: 1000px;
-    margin: auto;
+/* =====================
+   滚动渐显动画
+===================== */
+
+.fade{
+    opacity:0;
+    transform:translateY(40px);
+    transition: all 1.2s ease;
 }
 
-.section h2 {
-    color: #ff0000;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #550000;
-    padding-bottom: 10px;
+.fade.show{
+    opacity:1;
+    transform:translateY(0);
 }
 
-/* ===== 卡片布局 ===== */
-.games {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
+/* =====================
+   分支互动
+===================== */
+
+.choice{
+    margin-top:40px;
+    text-align:center;
 }
 
-.card {
-    background: rgba(30,0,0,0.8);
-    padding: 20px;
-    border: 1px solid #400;
-    transition: 0.4s;
+.choice button{
+    background:black;
+    border:1px solid var(--red-main);
+    color:var(--red-main);
+    padding:10px 20px;
+    margin:10px;
+    cursor:pointer;
+    transition:0.3s;
 }
 
-.card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 0 20px red;
+.choice button:hover{
+    background:var(--red-main);
+    color:black;
 }
 
-footer {
-    text-align: center;
-    padding: 40px;
-    background: #000;
-    border-top: 1px solid #300;
+.result{
+    margin-top:30px;
+    font-style:italic;
+    color:var(--text-dim);
+}
+
+/* =====================
+   SVG 乌鸦
+===================== */
+
+.crow{
+    position:fixed;
+    top:15%;
+    left:-200px;
+    width:120px;
+    animation: fly 25s linear infinite;
+}
+
+@keyframes fly{
+    0%{ left:-200px; transform:scale(0.8);}
+    50%{ transform:scale(1);}
+    100%{ left:120%; transform:scale(0.8);}
+}
+
+/* =====================
+   章节布局
+===================== */
+
+section{
+    max-width:900px;
+    margin:150px auto;
+    padding:0 20px;
+    line-height:1.8;
+}
+
+h2{
+    font-family:var(--font-title);
+    color:var(--red-main);
+    letter-spacing:3px;
+}
+
+@media(max-width:768px){
+    .hero h1{
+        font-size:42px;
+    }
 }
 
 </style>
@@ -130,56 +178,72 @@ footer {
 
 <body>
 
+<!-- SVG 乌鸦 -->
+<svg class="crow" viewBox="0 0 64 64">
+<path fill="black" stroke="red" stroke-width="1"
+d="M2 30 Q20 10 40 30 Q55 20 60 35 Q40 45 20 40 Q10 38 2 30Z"/>
+</svg>
+
 <nav>
-    <a href="#home">Home</a>
-    <a href="#story">Story</a>
-    <a href="#games">Games</a>
+<a href="#story">Story</a>
+<a href="#choice">Fate</a>
 </nav>
 
-<section class="hero" id="home">
-    <h1>RUSTY LAKE</h1>
-    <p>Enter the surreal world of memory and fate</p>
+<div class="hero">
+<h1>RUSTY LAKE</h1>
+<p>Memories shape destiny.</p>
+</div>
+
+<section id="story" class="fade">
+<h2>The Memory</h2>
+<p>
+In the universe of Rusty Lake, time is circular.  
+Memories fragment. Rituals repeat.  
+The crow watches silently.
+</p>
 </section>
 
-<section class="section" id="story">
-    <h2>The Story</h2>
-    <p>
-        Rusty Lake is a psychological puzzle universe filled with crows,
-        corrupted memories, and symbolic storytelling.
-        Every game reveals another fragment of a greater mystery.
-    </p>
+<section id="choice" class="fade">
+<h2>Choose Your Fate</h2>
+
+<div class="choice">
+<button onclick="choose(1)">Trust the Crow</button>
+<button onclick="choose(2)">Destroy the Memory</button>
+</div>
+
+<div class="result" id="result"></div>
+
 </section>
 
-<section class="section" id="games">
-    <h2>Major Titles</h2>
-    <div class="games">
+<script>
 
-        <div class="card">
-            <h3>Cube Escape: Seasons</h3>
-            <p>The beginning of the twisted timeline.</p>
-        </div>
+/* 滚动渐显 */
+const faders = document.querySelectorAll('.fade');
 
-        <div class="card">
-            <h3>Rusty Lake Hotel</h3>
-            <p>A dinner party where guests are more than they seem.</p>
-        </div>
+const appear = new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add('show');
+}
+});
+},{threshold:0.3});
 
-        <div class="card">
-            <h3>Rusty Lake Paradise</h3>
-            <p>The plague and the cursed family ritual.</p>
-        </div>
+faders.forEach(fade=>{
+appear.observe(fade);
+});
 
-        <div class="card">
-            <h3>The White Door</h3>
-            <p>A memory recovery experiment gone wrong.</p>
-        </div>
+/* 分支互动 */
+function choose(option){
+const result = document.getElementById("result");
 
-    </div>
-</section>
+if(option===1){
+result.innerHTML = "The crow accepts you. The cycle continues.";
+}else{
+result.innerHTML = "You break the memory. But nothing truly ends.";
+}
+}
 
-<footer>
-    <p>Created by Ningxin Fang</p>
-</footer>
+</script>
 
 </body>
 </html>
